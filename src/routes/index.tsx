@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { states } from '../states'
 import './index.css'
+import Modal, {openModal} from '@balvorn/reactmodal'
 export const Route = createFileRoute('/')({
   component: HomeComponent,
 })
 
 function HomeComponent() {
-
-
 
   const saveEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +20,7 @@ function HomeComponent() {
     employees.push(employee);
     localStorage.setItem('employees', JSON.stringify(employees));
     const dialog = document.getElementById('confirmation') as HTMLDialogElement
-    dialog.showModal()
+    openModal()
   }
 
   return (
@@ -30,29 +29,29 @@ function HomeComponent() {
         <h1>HRnet</h1>
       </div>
       <div className="container">
-        <a href="employee-list.html">View Current Employees</a>
+        <Link to='/employee-list'>View Current Employees</Link>
         <h2>Create Employee</h2>
         <form onSubmit={saveEmployee} id="create-employee">
-          <label htmlFor="first-name">First Name</label>
-          <input type="text" id="first-name" name="first-name" />
+          <label htmlFor="firstName">First Name</label>
+          <input required minLength={2} type="text" id="firstName" name="firstName" />
 
-          <label htmlFor="last-name">Last Name</label>
-          <input type="text" id="last-name" name="last-name" />
+          <label htmlFor="lastName">Last Name</label>
+          <input required minLength={2} type="text" id="lastName" name="lastName" />
 
-          <label htmlFor="date-of-birth">Date of Birth</label>
-          <input id="date-of-birth" type="text" name="date-of-birth" />
+          <label htmlFor="dateOfBirth">Date of Birth</label>
+          <input required id="dateOfBirth" type="date" name="dateOfBirth" />
 
-          <label htmlFor="start-date">Start Date</label>
-          <input id="start-date" type="text" name="start-date" />
+          <label htmlFor="startDate">Start Date</label>
+          <input required id="startDate" type="date" name="startDate" />
 
           <fieldset className="address">
             <legend>Address</legend>
 
             <label htmlFor="street">Street</label>
-            <input id="street" type="text" name="street" />
+            <input required minLength={2} id="street" type="text" name="street" />
 
             <label htmlFor="city">City</label>
-            <input id="city" type="text" name="city" />
+            <input required minLength={2} id="city" type="text" name="city" />
 
             <label htmlFor="state">State</label>
             <select name="state" id="state">
@@ -63,8 +62,8 @@ function HomeComponent() {
               }
             </select>
 
-            <label htmlFor="zip-code">Zip Code</label>
-            <input id="zip-code" type="number" name="zip-code" />
+            <label htmlFor="zipCode">Zip Code</label>
+            <input required minLength={5} id="zipCode" type="number" name="zipCode" />
           </fieldset>
 
           <label htmlFor="department">Department</label>
@@ -77,13 +76,11 @@ function HomeComponent() {
           </select>
           <button type="submit">Save</button>
         </form>
-
-
       </div >
-      <dialog id="confirmation" className="modal">
-        Employee Created!
-        <button onClick={() => (document.getElementById('confirmation') as HTMLDialogElement).close()}>close</button>
-      </dialog>
+
+      <Modal backDropClose>
+        <div>Employee Created!</div>
+      </Modal>
     </>
   )
 }
