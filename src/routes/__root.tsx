@@ -1,5 +1,5 @@
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
-import { useEffect } from 'react'
+import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { EmployeesContextProvider } from '../employeesContext'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -8,8 +8,8 @@ export const Route = createRootRoute({
 function RootComponent() {
 
   return (
-    <>
+    <EmployeesContextProvider>
       <Outlet />
-    </>
+    </EmployeesContextProvider>
   )
 }

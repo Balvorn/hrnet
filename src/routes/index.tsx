@@ -2,24 +2,24 @@ import * as React from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { states } from '../states'
 import './index.css'
-import Modal, {openModal} from '@balvorn/reactmodal'
+import Modal, { openModal } from '@balvorn/reactmodal'
+import { useContext } from 'react'
+import { EmployeesContext } from '../employeesContext'
+import { Employee } from '../components/table'
 export const Route = createFileRoute('/')({
   component: HomeComponent,
 })
 
 function HomeComponent() {
 
+  const employees = useContext(EmployeesContext)
   const saveEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
     const formValues = new FormData(form);
-    console.log(formValues)
-    const employees = JSON.parse(localStorage.getItem('employees') || "[]");
     const employee = Object.fromEntries(formValues.entries())
-    employees.push(employee);
-    localStorage.setItem('employees', JSON.stringify(employees));
-    const dialog = document.getElementById('confirmation') as HTMLDialogElement
+    employees?.addEmployee(employee as unknown as Employee)
     openModal()
   }
 

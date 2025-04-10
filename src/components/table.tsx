@@ -13,7 +13,7 @@ import unsorted from '../assets/sort_both.png';
 import sort_asc from '../assets/sort_asc.png';
 import sort_desc from '../assets/sort_desc.png';
 
-interface Employee {
+export interface Employee {
     firstName: string;
     lastName: string;
     dateOfBirth: Date;
@@ -24,7 +24,6 @@ interface Employee {
     zipCode: string;
     department: "Sales" | "Marketing" | "Engineering" | "Human Resources" | "Legal";
 }
-
 function EmployeeTable() {
     const [globalFilter, setGlobalFilter] = useState("");
 
@@ -105,9 +104,9 @@ function EmployeeTable() {
                                     onClick={header.column.getToggleSortingHandler()}
                                 >
                                     {flexRender(header.column.columnDef.header, header.getContext())}
-                                    {header.column.getIsSorted() === "asc" ? <img src={sort_asc}></img>
-                                        : header.column.getIsSorted() === "desc" ? <img src={sort_desc}></img>
-                                            : <img src={unsorted}></img>
+                                    {header.column.getIsSorted() === "asc" ? <img src={sort_asc} alt="asc_icon"></img>
+                                        : header.column.getIsSorted() === "desc" ? <img src={sort_desc} alt="desc_icon"></img>
+                                            : <img src={unsorted} alt="sort_icon"></img>
                                     }
                                 </th>
                             ))}
